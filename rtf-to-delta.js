@@ -16,8 +16,6 @@ function rtfToDelta (doc) {
 }
 
 function paragraphToDelta(paragraph) {
-  if (paragraph.content.length === 0) return null;
-
   let result = new Delta();
   for(let content of paragraph.content) {
     let delta = contentToDelta(content, paragraph.style);
