@@ -15,8 +15,8 @@ This modules depends on following modules.
 
 sample program
 ```JavaScript
+const RtfToDeltaConverter = require('@kenyog/rtf-to-quill-delta');
 async function main() {
-  const RtfToDeltaConverter = require('@kenyog/rtf-to-quill-delta');
   let rtf = await readFile('test.rtf', {encoding: 'ascii'});
   let converter = new RtfToDeltaConverter();
   let delta = await converter.convert(rtf);
