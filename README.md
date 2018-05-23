@@ -1,5 +1,5 @@
-rtf-to-delta
-============
+rtf-to-quill-delta
+==================
 
 This is a Node.js module for converting rtf file into quill delta format.
 
@@ -16,7 +16,7 @@ This modules depends on following modules.
 sample program
 ```JavaScript
 async function main() {
-  const RtfToDeltaConverter = require('@kenyog/rtf-to-delta');
+  const RtfToDeltaConverter = require('@kenyog/rtf-to-quill-delta');
   let rtf = await readFile('test.rtf', {encoding: 'ascii'});
   let converter = new RtfToDeltaConverter();
   let delta = await converter.convert(rtf);
@@ -61,7 +61,7 @@ Output
 ## Install
 
 ```
-npm install @kenyog/rtf-to-delta
+npm install @kenyog/rtf-to-quill-delta
 ```
 
 ## Licence
