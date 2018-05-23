@@ -1,6 +1,8 @@
 'use strict';
 
 const Delta = require('quill-delta');
+const RTFSpan = require('@kenyog/rtf-parser/rtf-span');
+const RTFParagraph = require('@kenyog/rtf-parser/rtf-paragraph');
 
 module.exports = {
   rtfToDelta: rtfToDelta,
@@ -9,8 +11,13 @@ module.exports = {
 function rtfToDelta (doc) {
   //console.log(JSON.stringify(doc.content[0], null,2));
   let result = new Delta();
-  for (let paragraph of doc.content) {
-    result = result.concat(paragraphToDelta(paragraph));
+  for (let c of doc.content) {
+    if (c instanceof RTFParagraph) {
+      result = result.concat(paragraphToDelta(c));
+    } else if (c instanceof RTFSpan) {
+      result = result.concat(spanToDelta(c, doc.style));
+    } else {
+    }
   }
   return result;
 }
@@ -18,14 +25,14 @@ function rtfToDelta (doc) {
 function paragraphToDelta(paragraph) {
   let result = new Delta();
   for(let content of paragraph.content) {
-    let delta = contentToDelta(content, paragraph.style);
+    let delta = spanToDelta(content, paragraph.style);
     result = result.concat(delta);
   }
 
   return result.concat(new Delta([{ insert: '\n' }]));
 }
 
-function contentToDelta(content, paragraphStyle) {
+function spanToDelta(content, paragraphStyle) {
   let attr = {
     bold: selectOr(content.style.bold, paragraphStyle.bold),
     italic: selectOr(content.style.italic, paragraphStyle.italic),
@@ -41,15 +48,15 @@ function contentToDelta(content, paragraphStyle) {
 }
 
 function selectOr(first, second) {
-  return (first!==null)? first: second;
+  return (first!=null)? first: second;
 }
 
 function getFont(first, second) {
-  return (first!==null)? first.name: (second!==null)? second.name: null;
+  return (first!=null)? first.name: (second!=null)? second.name: null;
 }
 
 function getFontSize(first, second) {
-  if (first!==null) {
+  if (first!=null) {
     return `${Math.floor(first*2/3*10)/10}px`;
   } else if (second!=null) {
     return `${Math.floor(second*2/3*10)/10}px`;
@@ -63,7 +70,7 @@ function twoHex(num) {
 }
 
 function getColor(color) {
-  if (color===null) return undefined;
+  if (color==null) return undefined;
   return `#${twoHex(color.red)}${twoHex(color.green)}${twoHex(color.blue)}`;
 }
 
