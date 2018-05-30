@@ -4,7 +4,7 @@
   "description": "converter from rtf file to quill delta format.",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "ava test/*"
   },
   "keywords": [
     "rtf",
@@ -17,5 +17,8 @@
   "dependencies": {
     "@kenyog/rtf-parser": "^1.2.1",
     "quill-delta": "^3.6.2"
+  },
+  "devDependencies": {
+    "ava": "^0.25.0"
   }
 }
