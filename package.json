@@ -1,6 +1,6 @@
 {
   "name": "@kenyog/rtf-to-quill-delta",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "converter from rtf file to quill delta format.",
   "main": "index.js",
   "scripts": {
