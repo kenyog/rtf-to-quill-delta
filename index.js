@@ -23,7 +23,12 @@ function readFile(testfile) {
 
 
 class RtfToDeltaConverter {
-  constructor() {
+  constructor(option={}) {
+    this.usePoint = false;
+
+    if (option) {
+      this.usePoint = (option.usePoint===true);
+    }
   }
 
   convert(rtf) {
@@ -33,7 +38,7 @@ class RtfToDeltaConverter {
   async convertRtfString(rtfString) {
     try {
       let rtfDoc = await rtfParser(rtfString);
-      return rtfToDelta(rtfDoc);
+      return rtfToDelta(rtfDoc, this.usePoint);
     } catch(e) {
       throw e;
     }
@@ -43,7 +48,7 @@ class RtfToDeltaConverter {
     try {
       let rtfString = await readFile(rtfFile);
       let rtfDoc = await rtfParser(rtfString);
-      return rtfToDelta(rtfDoc);
+      return rtfToDelta(rtfDoc, this.usePoint);
     } catch(e) {
       throw e;
     }

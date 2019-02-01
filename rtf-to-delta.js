@@ -8,7 +8,10 @@ module.exports = {
   rtfToDelta: rtfToDelta,
 };
 
-function rtfToDelta (doc) {
+var usePoint;
+
+function rtfToDelta (doc, _usePoint=false) {
+  usePoint = _usePoint;
   //console.log(JSON.stringify(doc.content[0], null,2));
   let result = new Delta();
   for (let c of doc.content) {
@@ -57,11 +60,19 @@ function getFont(first, second) {
 
 function getFontSize(first, second) {
   if (first!=null) {
-    return `${Math.floor(first*2/3*10)/10}px`;
+    return convertFontSize(first);
   } else if (second!=null) {
-    return `${Math.floor(second*2/3*10)/10}px`;
+    return convertFontSize(second);
   } else {
     return undefined;
+  }
+}
+
+function convertFontSize(rtfSize) {
+  if (usePoint) {
+    return `${Math.floor(rtfSize/2*10)/10}pt`;
+  } else {
+    return `${Math.floor(rtfSize*2/3*10)/10}px`;
   }
 }
 

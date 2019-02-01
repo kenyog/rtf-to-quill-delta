@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "converter from rtf file to quill delta format.",
   "main": "index.js",
+  "bin": "cli.js",
   "scripts": {
     "test": "ava test/*"
   },
@@ -16,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@kenyog/rtf-parser": "^1.2.1",
+    "commander": "^2.19.0",
     "quill-delta": "^3.6.2"
   },
   "devDependencies": {
